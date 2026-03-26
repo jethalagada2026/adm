@@ -1,0 +1,211 @@
+
+{
+  "entities": {
+    "TeamLeader": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TeamLeader",
+      "type": "object",
+      "description": "Represents the primary participant who registers and leads a hackathon team.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the TeamLeader entity."
+        },
+        "teamName": {
+          "type": "string",
+          "description": "The chosen name for the hackathon team."
+        },
+        "name": {
+          "type": "string",
+          "description": "The full name of the team leader."
+        },
+        "email": {
+          "type": "string",
+          "description": "The email address of the team leader.",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string",
+          "description": "The contact phone number of the team leader."
+        },
+        "college": {
+          "type": "string",
+          "description": "The name of the college or university."
+        },
+        "degree": {
+          "type": "string",
+          "description": "The academic degree (e.g., B.Tech)."
+        },
+        "branch": {
+          "type": "string",
+          "description": "The academic branch (e.g., Computer Science)."
+        },
+        "gender": {
+          "type": "string",
+          "description": "Gender of the team leader."
+        },
+        "year": {
+          "type": "string",
+          "description": "Academic year (e.g., 1st Year, 2nd Year)."
+        },
+        "linkedinProfileUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "LinkedIn profile URL of the leader."
+        },
+        "githubProfileUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "GitHub profile URL of the leader."
+        },
+        "registrationDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "teamName",
+        "name",
+        "email",
+        "phoneNumber",
+        "college",
+        "degree",
+        "branch",
+        "gender",
+        "year",
+        "registrationDateTime"
+      ]
+    },
+    "TeamMember": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "TeamMember",
+      "type": "object",
+      "description": "Represents an optional additional member of a hackathon team.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "teamLeaderId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "phoneNumber": {
+          "type": "string"
+        },
+        "college": {
+          "type": "string"
+        },
+        "degree": {
+          "type": "string"
+        },
+        "branch": {
+          "type": "string"
+        },
+        "gender": {
+          "type": "string"
+        },
+        "year": {
+          "type": "string"
+        },
+        "linkedinProfileUrl": {
+          "type": "string",
+          "format": "uri",
+          "description": "LinkedIn profile URL of the member."
+        }
+      },
+      "required": [
+        "id",
+        "teamLeaderId",
+        "name",
+        "email",
+        "phoneNumber",
+        "college",
+        "degree",
+        "branch",
+        "gender",
+        "year"
+      ]
+    },
+    "ProjectSubmission": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ProjectSubmission",
+      "type": "object",
+      "description": "Represents the project submission for a team.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "teamLeaderId": {
+          "type": "string"
+        },
+        "problemStatement": {
+          "type": "string"
+        },
+        "abstractText": {
+          "type": "string"
+        },
+        "pptPdfUrl": {
+          "type": "string"
+        },
+        "submissionDateTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "id",
+        "teamLeaderId",
+        "problemStatement",
+        "abstractText",
+        "pptPdfUrl",
+        "submissionDateTime"
+      ]
+    }
+  },
+  "auth": {
+    "providers": [
+      "google.com"
+    ]
+  },
+  "firestore": {
+    "structure": [
+      {
+        "path": "/users/{userId}",
+        "definition": {
+          "entityName": "TeamLeader",
+          "schema": {
+            "$ref": "#/backend/entities/TeamLeader"
+          },
+          "description": "Stores the profile information for a hackathon Team Leader."
+        }
+      },
+      {
+        "path": "/users/{userId}/teamMembers/{teamMemberId}",
+        "definition": {
+          "entityName": "TeamMember",
+          "schema": {
+            "$ref": "#/backend/entities/TeamMember"
+          },
+          "description": "Stores details for team members associated with a specific Team Leader."
+        }
+      },
+      {
+        "path": "/users/{userId}/projectSubmissions/{projectSubmissionId}",
+        "definition": {
+          "entityName": "ProjectSubmission",
+          "schema": {
+            "$ref": "#/backend/entities/ProjectSubmission"
+          },
+          "description": "Stores the project submission details for a specific Team Leader."
+        }
+      }
+    ]
+  }
+}

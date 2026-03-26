@@ -1,0 +1,61 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // --- GLOBAL HELPER FUNCTIONS ---
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isExistingOwner(userId) {
+      return isOwner(userId) && resource != null;
+    }
+
+    // --- AUTHORIZED ADMIN EMAILS ---
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.email in [
+        "rishikeshavjha51@gmail.com",
+        // "another-admin@gmail.com"
+      ];
+    }
+
+    // --- COLLECTION RULES ---
+
+    match /users/{userId} {
+      // Allow the owner of the document OR an admin to read the profile
+      allow get: if isOwner(userId) || isAdmin();
+      
+      // Allow admin to list everything, OR regular users to check team name availability 
+      // (limited to a very specific query with limit 1)
+      allow list: if isAdmin() || (isSignedIn() && request.query.limit <= 1);
+      
+      allow create: if isOwner(userId) && request.resource.data.id == userId;
+      allow update: if isExistingOwner(userId) && request.resource.data.id == resource.data.id;
+      allow delete: if isExistingOwner(userId);
+
+      match /teamMembers/{teamMemberId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && request.resource.data.teamLeaderId == userId;
+        allow update: if isExistingOwner(userId) && request.resource.data.teamLeaderId == resource.data.teamLeaderId;
+        allow delete: if isExistingOwner(userId);
+      }
+
+      match /projectSubmissions/{projectSubmissionId} {
+        allow get, list: if isOwner(userId) || isAdmin();
+        allow create: if isOwner(userId) && request.resource.data.teamLeaderId == userId;
+        allow update: if isExistingOwner(userId) && request.resource.data.teamLeaderId == resource.data.teamLeaderId;
+        allow delete: if isExistingOwner(userId);
+      }
+    }
+
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}
