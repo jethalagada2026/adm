@@ -20,7 +20,7 @@ import { generateTeamNameOptions } from '@/ai/flows/team-name-generator-flow';
 import Link from 'next/link';
 
 // Authorized admins
-const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com"];
+const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com","atharvakadam5507@gmail.com","krishnajha6969@gmail.com","rishikeshav.s.jha24@slrtce.in","77adityadwivedi77@gmail.com"];
 
 const YEAR_OPTIONS = [
   { label: "Level 1 (1st Year)", value: "1st Year" },
