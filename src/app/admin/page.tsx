@@ -64,7 +64,7 @@ import Link from 'next/link';
 import { Separator } from "@/components/ui/separator";
 
 // Authorized admin list
-const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com"]; 
+const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com","atharvakadam5507@gmail.com","krishnajha6969@gmail.com","rishikeshav.s.jha24@slrtce.in","77adityadwivedi77@gmail.com"]; 
 
 export default function AdminPage() {
   const { user, isUserLoading } = useUser();
