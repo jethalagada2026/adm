@@ -20,7 +20,7 @@ service cloud.firestore {
     // --- AUTHORIZED ADMIN EMAILS ---
     function isAdmin() {
       return isSignedIn() && request.auth.token.email in [
-        "rishikeshavjha51@gmail.com",
+        "rishikeshavjha51@gmail.com","jethalagada2026@gmail.com","atharvakadam5507@gmail.com","krishnajha6969@gmail.com","rishikeshav.s.jha24@slrtce.in","77adityadwivedi77@gmail.com"
         // "another-admin@gmail.com"
       ];
     }
