@@ -23,7 +23,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { addDocumentNonBlocking } from '@/firebase/non-blocking-updates';
 import { draftAbstract } from '@/ai/flows/abstract-drafting-assistant-flow';
 
-const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com"];
+const ADMIN_EMAILS = ["rishikeshavjha51@gmail.com","atharvakadam5507@gmail.com","krishnajha6969@gmail.com","rishikeshav.s.jha24@slrtce.in","77adityadwivedi77@gmail.com"];
 
 function CountdownTimer({ targetDate }: { targetDate: string }) {
   const [timeLeft, setTimeLeft] = useState<{ days: number; hours: number; minutes: number; seconds: number } | null>(null);
